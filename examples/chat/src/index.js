@@ -8,7 +8,29 @@ function init () {
     privateButton.disabled = false
     p2psocket.emit('peer-obj', 'Hello there. I am ' + p2psocket.peerId)
   })
+ /** open camera and microphone for streaming */
+  const videoGrid = document.getElementById('video-grid')
 
+  const myVideo = document.createElement('video')
+  myVideo.muted = true
+  console.log('element created ',myVideo)
+
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(stream => {
+    addVideoStream(myVideo, stream)
+    console.log('video added')
+  })
+
+  function addVideoStream(video, stream) {
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+      video.play()
+    })
+    console.log('video info ', video)
+    videoGrid.append(video)
+  }
   // Elements
   var privateButton = document.getElementById('private')
   var form = document.getElementById('msg-form')
@@ -72,6 +94,7 @@ function init () {
     upgradeMsg.innerHTML = 'WebRTC connection established!'
     privateButton.disabled = true
   }
+
 }
 
 document.addEventListener('DOMContentLoaded', init, false)

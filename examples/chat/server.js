@@ -4,9 +4,8 @@ var server = require('http').createServer(
 )
 var p2pserver = require('socket.io-p2p-server').Server
 var io = require('socket.io')(server)
-
-server.listen(3030, function () {
-  console.log('Listening on 3030')
+server.listen(3000, function () {
+  console.log('Listening on 3000')
 })
 
 io.use(p2pserver)
